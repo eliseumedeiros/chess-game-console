@@ -1,10 +1,10 @@
-﻿namespace tabuleiro {
-    internal class Posicao {
+﻿namespace board {
+    internal class Position {
 
         public int line { get; set; }
         public int column { get; set; }
 
-        public Posicao(int line, int column) {
+        public Position(int line, int column) {
             this.line = line;
             this.column = column;
         }
