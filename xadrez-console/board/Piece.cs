@@ -7,8 +7,8 @@ namespace board {
         public int amountOfMovies { get; protected set; }
         public Board board { get; protected set; }
 
-        public Piece(Position position, Color color, Board board) {
-            this.position = position;
+        public Piece(Color color, Board board) {
+            this.position = null;
             this.color = color;
             this.amountOfMovies = 0;
             this.board = board;
