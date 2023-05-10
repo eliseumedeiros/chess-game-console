@@ -2,21 +2,21 @@
 
 namespace board {
     internal class Board {
-        public int line { get; set; }
+        public int row { get; set; }
         public int column { get; set; }
         public Piece[,] pieces;
 
-        public Board(int line, int column) {
-            this.line = line;
+        public Board(int row, int column) {
+            this.row = row;
             this.column = column;
-            this.pieces = new Piece[line, column];
+            this.pieces = new Piece[row, column];
         }
 
-        public Piece piece(int line, int column) {
-            return pieces[line, column];
+        public Piece piece(int row, int column) {
+            return pieces[row, column];
         }
         public Piece piece(Position pos) {
-            return pieces[pos.line, pos.column];
+            return pieces[pos.row, pos.column];
         }
 
         public bool existPiece(Position pos) {
@@ -28,12 +28,22 @@ namespace board {
             if (existPiece(pos)) {
                 throw new BoardException("There is already a piece in that position!");
             }
-            pieces[pos.line, pos.column] = p;
+            pieces[pos.row, pos.column] = p;
             p.position = pos;
         }
 
+        public Piece removePiece(Position pos) {
+            if(piece(pos) == null) {
+                return null;
+            }
+            Piece aux = piece(pos);
+            aux.position = null;
+            pieces[pos.row, pos.column] = null;
+            return aux;
+        }
+
         public bool validPosition(Position pos) {
-            if (pos.line<0 || pos.line>=line || pos.column<0 || pos.column>=column) { 
+            if (pos.row<0 || pos.row>=row || pos.column<0 || pos.column>=column) { 
                 return false;
             }
                 return true;

@@ -13,5 +13,9 @@ namespace board {
             this.amountOfMovies = 0;
             this.board = board;
         }
+
+        public void IncreaseAmountOfMovies() {
+            amountOfMovies++;
+        }
     }
 }

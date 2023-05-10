@@ -1,16 +1,16 @@
 ﻿namespace board {
     internal class Position {
 
-        public int line { get; set; }
+        public int row { get; set; }
         public int column { get; set; }
 
         public Position(int line, int column) {
-            this.line = line;
+            this.row = line;
             this.column = column;
         }
 
         public override string ToString() {
-            return line
+            return row
                 + ", " 
                 + column;
         }

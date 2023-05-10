@@ -4,18 +4,18 @@ namespace chess {
     internal class ChessPosition {
 
         public char column { get; set; }
-        public int line { get; set; }
+        public int row { get; set; }
 
-        public ChessPosition(char column, int line) {
+        public ChessPosition(char column, int row) {
             this.column = column;
-            this.line = line;
+            this.row = row;
         }
 
         public Position ToPosition() {
-            return new Position(8 - line, column - 'a');
+            return new Position(8 - row, column - 'a');
         }
         public override string ToString() {
-            return "" + column + line;
+            return "" + column + row;
         }
     }
 }
