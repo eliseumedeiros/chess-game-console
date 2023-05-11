@@ -1,7 +1,7 @@
 ﻿using board;
 
 namespace board {
-    class Piece {
+    abstract class Piece {
         public Position position { get; set; }
         public Color color { get; set; }
         public int amountOfMovies { get; protected set; }
@@ -17,5 +17,6 @@ namespace board {
         public void IncreaseAmountOfMovies() {
             amountOfMovies++;
         }
+        public abstract bool[,] possibleMoviments();
     }
 }

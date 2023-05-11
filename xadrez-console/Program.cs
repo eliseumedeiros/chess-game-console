@@ -13,8 +13,16 @@ namespace xadrez_console {
                     Console.Clear();
                     Screen.printBoard(game.board);
 
+                    Console.WriteLine();
                     Console.Write("Origin: ");
                     Position origin = Screen.ReadCressPosition().ToPosition();
+
+                    bool[,] possiblePosistions = game.board.piece(origin).possibleMoviments();
+
+                    Console.Clear();
+                    Screen.printBoard(game.board, possiblePosistions);
+
+                    Console.WriteLine();
                     Console.Write("Destination: ");
                     Position destination = Screen.ReadCressPosition().ToPosition();
 
