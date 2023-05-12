@@ -12,7 +12,7 @@ namespace xadrez_console {
                 while(!game.finished) {
                     try {
                         Console.Clear();
-                        Screen.printBoard(game.board);
+                        Screen.printGamePlay(game);
 
                         Console.WriteLine();
                         Console.WriteLine("Turn: " + game.turn);

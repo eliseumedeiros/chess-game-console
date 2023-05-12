@@ -4,7 +4,36 @@ using chess;
 
 namespace xadrez_console {
     internal class Screen {
+        public static void printGamePlay(ChessGame game) {
+            printBoard(game.board);
+            Console.WriteLine();
+            printCapturedPieces(game);
 
+            Console.WriteLine();
+            Console.WriteLine("Turn: " + game.turn);
+            Console.WriteLine("Waiting for move: " + game.currentPlayer);
+
+        }
+        public static void printCapturedPieces(ChessGame game) {
+            Console.WriteLine("Captured Pieces:");
+            Console.Write("White: ");
+            printSet(game.capturedPieces(Color.White));
+            Console.WriteLine();
+            Console.Write("Black: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            printSet(game.capturedPieces(Color.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
+        }
+        public static void printSet(HashSet<Piece> set) {
+            Console.Write("[");
+            foreach (Piece x in set) {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
+
+        }
         public static void printBoard(Board board) {
 
             for (int i = 0; i < board.row; i++) {
