@@ -7,8 +7,8 @@ namespace chess {
     internal class ChessGame {
 
         public Board board { get; private set; }
-        private int turn;
-        private Color currentPlayer;
+        public int turn { get; private set; }
+        public Color currentPlayer { get; private set; }
         public bool finished { get; private set; }
 
         public ChessGame() {
@@ -24,6 +24,37 @@ namespace chess {
             p.IncreaseAmountOfMovies();
             Piece capturedPiece = board.removePiece(destination);
             board.putPiece(p, destination);
+        }
+
+        public void doMoviment(Position origin, Position destination) {
+            executeMoviment(origin, destination);
+            turn++;
+            changePlayer();
+        }
+
+        public void validateOriginPosition(Position pos) {
+            if (board.piece(pos) == null) {
+                throw new BoardException("There is no piece in the chosen position!");
+            }
+            if(currentPlayer != board.piece(pos).color) {
+                throw new BoardException("The chosen origin piece is not yours!");
+            }
+            if (!board.piece(pos).thereArePossivelMoves()) {
+                throw new BoardException("There are no possible moves for the chosen origin piece!");
+            }
+        }
+        public void validateDestinationPosition(Position origin, Position destination) {
+            if (!board.piece(origin).canMoveTo(destination)) {
+                throw new BoardException("Ivalid destination position!");
+            }
+        }
+        private void changePlayer() {
+            if (currentPlayer == Color.White) {
+                currentPlayer = Color.Black;
+            }
+            else {
+                currentPlayer = Color.White;
+            }
         }
 
         private void putPieces() {

@@ -10,23 +10,36 @@ namespace xadrez_console {
                 ChessGame game = new ChessGame();
 
                 while(!game.finished) {
-                    Console.Clear();
-                    Screen.printBoard(game.board);
+                    try {
+                        Console.Clear();
+                        Screen.printBoard(game.board);
 
-                    Console.WriteLine();
-                    Console.Write("Origin: ");
-                    Position origin = Screen.ReadCressPosition().ToPosition();
+                        Console.WriteLine();
+                        Console.WriteLine("Turn: " + game.turn);
+                        Console.WriteLine("Waiting for move: " + game.currentPlayer);
 
-                    bool[,] possiblePosistions = game.board.piece(origin).possibleMoviments();
+                        Console.WriteLine();
+                        Console.Write("Origin: ");
+                        Position origin = Screen.ReadCressPosition().ToPosition();
+                        game.validateOriginPosition(origin);
 
-                    Console.Clear();
-                    Screen.printBoard(game.board, possiblePosistions);
+                        bool[,] possiblePosistions = game.board.piece(origin).possibleMoviments();
 
-                    Console.WriteLine();
-                    Console.Write("Destination: ");
-                    Position destination = Screen.ReadCressPosition().ToPosition();
+                        Console.Clear();
+                        Screen.printBoard(game.board, possiblePosistions);
 
-                    game.executeMoviment(origin, destination);
+                        Console.WriteLine();
+                        Console.Write("Destination: ");
+                        Position destination = Screen.ReadCressPosition().ToPosition();
+                        game.validateDestinationPosition(origin, destination);
+
+                        game.doMoviment(origin, destination);
+                    }
+                    catch (BoardException e) {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
+                   
 
                 }
                 
