@@ -17,6 +17,9 @@ namespace board {
         public void IncreaseAmountOfMovies() {
             amountOfMovies++;
         }
+        public void decreaseAmountOfMoves() {
+            amountOfMovies--;
+        }
         public bool thereArePossivelMoves() {
             bool[,] mat = possibleMoviments();
             for(int i=0; i<board.row; i++) {

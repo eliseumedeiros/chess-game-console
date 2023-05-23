@@ -9,14 +9,11 @@ namespace xadrez_console {
             try {
                 ChessGame game = new ChessGame();
 
-                while(!game.finished) {
+                while (!game.finished) {
+
                     try {
                         Console.Clear();
                         Screen.printGamePlay(game);
-
-                        Console.WriteLine();
-                        Console.WriteLine("Turn: " + game.turn);
-                        Console.WriteLine("Waiting for move: " + game.currentPlayer);
 
                         Console.WriteLine();
                         Console.Write("Origin: ");
@@ -37,12 +34,12 @@ namespace xadrez_console {
                     }
                     catch (BoardException e) {
                         Console.WriteLine(e.Message);
-                        Console.ReadLine();
                     }
-                   
+
+                    Console.ReadLine();
 
                 }
-                
+
             }
             catch (BoardException e) {
                 Console.WriteLine(e.Message);

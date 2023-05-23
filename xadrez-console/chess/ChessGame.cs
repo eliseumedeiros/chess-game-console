@@ -12,6 +12,7 @@ namespace chess {
         public bool finished { get; private set; }
         private HashSet<Piece> pieces;
         private HashSet<Piece> captured;
+        public bool check { get; private set; }
 
         public ChessGame() {
             board = new Board(8, 8);
@@ -19,11 +20,12 @@ namespace chess {
             currentPlayer = Color.White;
             pieces = new HashSet<Piece>();
             captured = new HashSet<Piece>();
+            check = false;
 
             putPieces();
         }
 
-        public void executeMoviment(Position origin, Position destination) {
+        public Piece executeMoviment(Position origin, Position destination) {
             Piece p = board.removePiece(origin);
             p.IncreaseAmountOfMovies();
             Piece capturedPiece = board.removePiece(destination);
@@ -31,11 +33,12 @@ namespace chess {
             if (capturedPiece != null) {
                 captured.Add(capturedPiece);
             }
+            return capturedPiece;
         }
         public HashSet<Piece> capturedPieces(Color color) {
             HashSet<Piece> aux = new HashSet<Piece>();
-            foreach(Piece x in captured) {
-                if(x.color == color) {
+            foreach (Piece x in captured) {
+                if (x.color == color) {
                     aux.Add(x);
                 }
             }
@@ -51,8 +54,31 @@ namespace chess {
             aux.ExceptWith(capturedPieces(color));
             return aux;
         }
+        public void undoMoviment(Position origin, Position destination, Piece capturedPiece) {
+            Piece p = board.removePiece(destination);
+            p.decreaseAmountOfMoves();
+            if (capturedPiece != null) {
+                board.putPiece(capturedPiece, destination);
+                captured.Remove(capturedPiece);
+            }
+            board.putPiece(p, origin);
+
+        }
         public void doMoviment(Position origin, Position destination) {
-            executeMoviment(origin, destination);
+            Piece capturedPiece = executeMoviment(origin, destination);
+
+            if (isItInCheck(currentPlayer)) {
+                undoMoviment(origin, destination, capturedPiece);
+                throw new BoardException("You cannot put yourself in check!");
+            }
+
+            if (isItInCheck(adversary(currentPlayer))) {
+                check = true;
+            }
+            else {
+                check = false;
+            }
+
             turn++;
             changePlayer();
         }
@@ -80,6 +106,35 @@ namespace chess {
             else {
                 currentPlayer = Color.White;
             }
+        }
+        private Color adversary(Color color) {
+            if (color == Color.White) {
+                return Color.Black;
+            }
+            else {
+                return Color.White;
+            }
+        }
+        private Piece king(Color color) {
+            foreach (Piece x in piecesInGame(color)) {
+                if (x is King) {
+                    return x;
+                }
+            }
+            return null;
+        }
+        public bool isItInCheck(Color color) {
+            Piece K = king(color);
+            if (K == null) {
+                throw new BoardException("There is no " + color + " King on the board!");
+            }
+            foreach (Piece x in piecesInGame( adversary(color))) {
+                bool[,] mat = x.possibleMoviments();
+                if (mat[K.position.row, K.position.column]) {
+                    return true;
+                }
+            }
+            return false;
         }
         public void putNewPiece(char column, int row, Piece piece) {
             board.putPiece(piece, new ChessPosition(column, row).ToPosition());
