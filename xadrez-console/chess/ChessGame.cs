@@ -100,7 +100,7 @@ namespace chess {
             }
         }
         public void validateDestinationPosition(Position origin, Position destination) {
-            if (!board.piece(origin).canMoveTo(destination)) {
+            if (!board.piece(origin).isItAPossibleMoviment(destination)) {
                 throw new BoardException("Ivalid destination position!");
             }
         }
