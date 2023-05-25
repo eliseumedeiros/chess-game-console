@@ -9,7 +9,7 @@ namespace board {
         public Board(int row, int column) {
             this.row = row;
             this.column = column;
-            this.pieces = new Piece[row, column];
+            pieces = new Piece[row, column];
         }
 
         public Piece piece(int row, int column) {
@@ -25,7 +25,7 @@ namespace board {
         }
 
         public void putPiece(Piece p, Position pos) {
-            if (existPiece(pos)) {
+            if (existPiece(pos) && p.color == pieces[pos.row, pos.column].color) {
                 throw new BoardException("There is already a piece in that position!");
             }
             pieces[pos.row, pos.column] = p;
@@ -43,7 +43,7 @@ namespace board {
         }
 
         public bool validPosition(Position pos) {
-            if (pos.row<0 || pos.row>=row || pos.column<0 || pos.column>=column) { 
+            if (pos.row<0 || pos.row>=this.row || pos.column<0 || pos.column>=this.column) { 
                 return false;
             }
                 return true;

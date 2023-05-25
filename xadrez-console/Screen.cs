@@ -10,11 +10,16 @@ namespace xadrez_console {
             printCapturedPieces(game);
             Console.WriteLine();
             Console.WriteLine("Turn: " + game.turn);
-            Console.WriteLine("Waiting for move: " + game.currentPlayer);
-            if (game.check) {
-                Console.WriteLine("CHECK!");
+            if (!game.finished) {
+                Console.WriteLine("Waiting for move: " + game.currentPlayer);
+                if (game.check) {
+                    Console.WriteLine("CHECK!");
+                }
             }
-
+            else {
+                Console.WriteLine("CHECKMATE!");
+                Console.WriteLine("Winner: " + game.currentPlayer);
+            }
         }
         public static void printCapturedPieces(ChessGame game) {
             Console.WriteLine("Captured Pieces:");

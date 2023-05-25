@@ -79,8 +79,13 @@ namespace chess {
                 check = false;
             }
 
-            turn++;
-            changePlayer();
+            if (checkMateTest(adversary(currentPlayer))) {
+                finished = true;
+            }
+            else {
+                turn++;
+                changePlayer();
+            }
         }
 
         public void validateOriginPosition(Position pos) {
@@ -128,7 +133,7 @@ namespace chess {
             if (K == null) {
                 throw new BoardException("There is no " + color + " King on the board!");
             }
-            foreach (Piece x in piecesInGame( adversary(color))) {
+            foreach (Piece x in piecesInGame(adversary(color))) {
                 bool[,] mat = x.possibleMoviments();
                 if (mat[K.position.row, K.position.column]) {
                     return true;
@@ -136,24 +141,48 @@ namespace chess {
             }
             return false;
         }
+
+        public bool checkMateTest(Color color) {
+            if (!isItInCheck(color)) {
+                return false;
+            }
+            foreach (Piece x in piecesInGame(color)) {
+                bool[,] mat = x.possibleMoviments();
+                for (int i = 0; i < board.row; i++) {
+                    for (int j = 0; j < board.column; j++) {
+                        if (mat[i, j]) {
+                            Position origin = x.position;
+                            Position destination = new Position(i, j);
+                            Piece capturedPiece = executeMoviment(origin, destination);
+                            bool checkTest = isItInCheck(color);
+                            undoMoviment(origin, destination, capturedPiece);
+                            if (!checkTest) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
         public void putNewPiece(char column, int row, Piece piece) {
             board.putPiece(piece, new ChessPosition(column, row).ToPosition());
             pieces.Add(piece);
         }
         private void putPieces() {
+            //putNewPiece('c', 1, new Rook(board, Color.White));
+            //putNewPiece('c', 2, new Rook(board, Color.White));
+            //putNewPiece('d', 2, new Rook(board, Color.White));
+            putNewPiece('h', 7, new Rook(board, Color.White));
             putNewPiece('c', 1, new Rook(board, Color.White));
-            putNewPiece('c', 2, new Rook(board, Color.White));
-            putNewPiece('d', 2, new Rook(board, Color.White));
-            putNewPiece('e', 2, new Rook(board, Color.White));
-            putNewPiece('e', 1, new Rook(board, Color.White));
             putNewPiece('d', 1, new King(board, Color.White));
 
-            putNewPiece('c', 7, new Rook(board, Color.Black));
-            putNewPiece('c', 8, new Rook(board, Color.Black));
-            putNewPiece('d', 7, new Rook(board, Color.Black));
-            putNewPiece('e', 7, new Rook(board, Color.Black));
-            putNewPiece('e', 8, new Rook(board, Color.Black));
-            putNewPiece('d', 8, new King(board, Color.Black));
+            //putNewPiece('c', 7, new Rook(board, Color.Black));
+            //putNewPiece('c', 8, new Rook(board, Color.Black));
+            //putNewPiece('d', 7, new Rook(board, Color.Black));
+            //putNewPiece('e', 7, new Rook(board, Color.Black));
+            putNewPiece('b', 8, new Rook(board, Color.Black));
+            putNewPiece('a', 8, new King(board, Color.Black));
 
         }
     }
