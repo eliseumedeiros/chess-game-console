@@ -40,7 +40,7 @@ namespace xadrez_console.chess {
                 if (board.piece(pos) != null && board.piece(pos).color != color) {
                     break;
                 }
-                pos.defineValues(pos.row - 1, pos.column + -1);
+                pos.defineValues(pos.row - 1, pos.column + 1);
             }
 
             // SE
