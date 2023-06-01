@@ -141,6 +141,19 @@ namespace chess {
                 throw new BoardException("You cannot put yourself in check!");
             }
 
+            Piece p = board.piece(destination);
+
+            // #specialgame promotion
+            if (p is Pawn) {
+                if ((p.color == Color.White && destination.row == 0) || (p.color == Color.Black && destination.row == 7)) {
+                    p = board.removePiece(destination);
+                    pieces.Remove(p);
+                    Piece queen = new Queen(board, p.color);
+                    board.putPiece(queen, destination);
+                    pieces.Add(queen);
+                }
+            }
+
             if (isItInCheck(adversary(currentPlayer))) {
                 check = true;
             }
@@ -155,8 +168,6 @@ namespace chess {
                 turn++;
                 changePlayer();
             }
-
-            Piece p = board.piece(destination);
 
             // #specialmoviment En Passant
             if (p is Pawn && (destination.row == origin.row - 2 || destination.row == origin.row + 2)) {
