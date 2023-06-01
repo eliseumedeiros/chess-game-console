@@ -72,9 +72,9 @@ namespace chess {
                 mat[pos.row, pos.column] = true;
             }
 
-            // #special game Castle (roque)
+            // #specialgame Castle (roque)
             if (amountOfMovies == 0 && !game.check) {
-                // #special movement "Castle Kingside" (roque pequeno)
+                // #specialgame "Castle Kingside" (roque pequeno)
                 Position posRook1 = new Position(position.row, position.column + 3);
                 if (testRookToCastle(posRook1)) {
                     Position p1 = new Position(position.row, position.column + 1);
@@ -83,7 +83,7 @@ namespace chess {
                         mat[position.row, position.column + 2] = true;
                     }
                 }
-                // #special movement "Castle Queenside" (roque pequeno)
+                // #specialgame "Castle Queenside" (roque pequeno)
                 Position posRook2 = new Position(position.row, position.column - 4);
                 if (testRookToCastle(posRook2)) {
                     Position p1 = new Position(position.row, position.column - 1);
