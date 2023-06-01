@@ -4,7 +4,7 @@ namespace chess {
     internal class King : Piece {
         private ChessGame game;
 
-        public King(Board board, Color color,ChessGame game) : base(color, board) {
+        public King(Board board, Color color, ChessGame game) : base(color, board) {
             this.game = game;
         }
 
@@ -94,7 +94,7 @@ namespace chess {
                     }
                 }
             }
-            
+
 
             return mat;
         }

@@ -22,8 +22,8 @@ namespace board {
         }
         public bool thereArePossivelMoves() {
             bool[,] mat = possibleMoviments();
-            for(int i=0; i<board.row; i++) {
-                for(int j=0; j<board.column; j++) {
+            for (int i = 0; i < board.row; i++) {
+                for (int j = 0; j < board.column; j++) {
                     if (mat[i, j]) {
                         return true;
                     }

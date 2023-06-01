@@ -33,7 +33,7 @@ namespace board {
         }
 
         public Piece removePiece(Position pos) {
-            if(piece(pos) == null) {
+            if (piece(pos) == null) {
                 return null;
             }
             Piece aux = piece(pos);
@@ -43,10 +43,10 @@ namespace board {
         }
 
         public bool validPosition(Position pos) {
-            if (pos.row<0 || pos.row>=this.row || pos.column<0 || pos.column>=this.column) { 
+            if (pos.row < 0 || pos.row >= this.row || pos.column < 0 || pos.column >= this.column) {
                 return false;
             }
-                return true;
+            return true;
         }
 
         public void validatePositicion(Position pos) {

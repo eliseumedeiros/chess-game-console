@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace xadrez_console.board {
     internal class BoardException : Exception {
 
-        public BoardException(string msg) : base(msg) { 
-        
+        public BoardException(string msg) : base(msg) {
+
         }
 
     }
